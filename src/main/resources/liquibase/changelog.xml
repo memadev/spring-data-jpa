@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="Mehdi Eshaghi">
+        <comment>Create customer table</comment>
+        <createTable tableName="customer">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="customer_pk"/>
+            </column>
+            <column name="person_number" type="varchar(12)"/>
+            <column name="first_name" type="varchar(25)"/>
+            <column name="last_name" type="varchar(25)"/>
+        </createTable>
+        <createSequence sequenceName="seq_customer"/>
+        <addUniqueConstraint tableName="customer"
+                             columnNames="person_number"
+                             constraintName="unq_customer_person_number"/>
+    </changeSet>
+
+    <changeSet id="2" author="Mehdi Eshaghi">
+        <comment>Create account table</comment>
+        <createTable tableName="account">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="account_pk"/>
+            </column>
+            <column name="customer_id" type="bigint"/>
+            <column name="account_number" type="varchar(25)"/>
+            <column name="currency_uid" type="varchar(3)"/>
+        </createTable>
+        <createSequence sequenceName="seq_account"/>
+        <addUniqueConstraint tableName="account"
+                             columnNames="account_number"
+                             constraintName="unq_account_account_number"/>
+        <addForeignKeyConstraint baseTableName="account"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="customer"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_account_customer"/>
+    </changeSet>
+</databaseChangeLog>

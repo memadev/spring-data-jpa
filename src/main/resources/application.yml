@@ -1,0 +1,27 @@
+server:
+  servlet.context-path: /customer
+  port: 9090
+
+spring:
+  application.name: customer
+  profiles.active: normal
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer?currentSchema=customer
+    driver-class-name: org.postgresql.Driver
+    username: customer_service
+    password: sEVlCTaA68HBIMnS1fOW
+    hikari.connectionTimeout: 100000
+    hikari.idleTimeout: 600000
+    hikari.maxLifetime: 1800000
+
+  jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase.enabled: true
+  liquibase.change-log: classpath:liquibase/changelog.xml
+
+logging.level:
+  root: INFO
+  liquibase: INFO
+  com.zaxxer: DEBUG
+  org.hibernate.SQL: DEBUG
+  org.hibernate.type.descriptor.sql.BasicBinder: TRACE
