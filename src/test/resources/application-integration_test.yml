@@ -1,9 +1,5 @@
 spring.application.name: customer
 
-server:
-  servlet.context-path: /customer
-  port: 9090
-
 spring.liquibase.enabled: true
 
 logging.level:

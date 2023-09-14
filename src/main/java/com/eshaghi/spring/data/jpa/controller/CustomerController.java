@@ -1,9 +1,9 @@
 package com.eshaghi.spring.data.jpa.controller;
 
-import com.eshaghi.spring.data.jpa.dto.CustomerDocument;
 import com.eshaghi.spring.data.jpa.dto.CustomerDto;
 import com.eshaghi.spring.data.jpa.dto.CustomerQuery;
 import com.eshaghi.spring.data.jpa.service.CustomerService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -32,13 +32,13 @@ class CustomerController {
     private CustomerService service;
 
     @GetMapping
-    public CustomerDocument findAll() {
-        return new CustomerDocument(convertToDtoList(service.findAll()));
+    public List<CustomerDto> findAll() {
+        return convertToDtoList(service.findAll());
     }
 
-    @PostMapping
-    public CustomerDocument find(CustomerQuery query) {
-        return new CustomerDocument(convertToDtoList(service.findAll(query)));
+    @PostMapping("/find")
+    public List<CustomerDto> find(@RequestBody CustomerQuery query) {
+        return convertToDtoList(service.findAll(query));
     }
 
     @GetMapping("/{personNumber}")

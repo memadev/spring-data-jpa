@@ -1,7 +1,6 @@
 package com.eshaghi.spring.data.jpa.fixture;
 
 import com.eshaghi.spring.data.jpa.domain.Account;
-import static com.eshaghi.spring.data.jpa.fixture.CurrencyFixture.EUR;
 
 public class AccountFixture {
 
@@ -11,7 +10,6 @@ public class AccountFixture {
     public static Account createAccount(String accountNumber) {
         return Account.builder()
                 .accountNumber(accountNumber)
-                .currencyUid(EUR)
                 .build();
     }
 }

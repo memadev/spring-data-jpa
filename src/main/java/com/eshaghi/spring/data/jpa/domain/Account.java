@@ -28,7 +28,4 @@ public class Account {
 
     @Column(name = "account_number")
     private String accountNumber;
-
-    @Column(name = "currency_uid")
-    private String currencyUid;
 }

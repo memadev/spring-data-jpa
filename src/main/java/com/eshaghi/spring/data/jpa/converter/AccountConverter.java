@@ -14,8 +14,7 @@ public class AccountConverter {
 
     private static AccountDto convertToDto(Account account) {
         return new AccountDto(account.getId(),
-                account.getAccountNumber(),
-                account.getCurrencyUid());
+                account.getAccountNumber());
     }
 
     public static List<Account> convertToList(List<AccountDto> accounts) {
@@ -26,7 +25,6 @@ public class AccountConverter {
 
     private static Account convert(AccountDto dto) {
         return new Account(dto.id(),
-                dto.accountNumber(),
-                dto.currencyUid());
+                dto.accountNumber());
     }
 }
