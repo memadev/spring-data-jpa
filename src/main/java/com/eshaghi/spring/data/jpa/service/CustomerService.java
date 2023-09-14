@@ -7,7 +7,6 @@ import com.eshaghi.spring.data.jpa.dto.CustomerQuery;
 import com.eshaghi.spring.data.jpa.exception.NotFoundException;
 import com.eshaghi.spring.data.jpa.repository.CustomerRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,11 +34,10 @@ public class CustomerService {
     }
 
     @Transactional
-    public void save(Customer entity) {
-        Optional<Customer> optionalCustomer = repository.findByPersonNumber(entity.getPersonNumber());
-        if (optionalCustomer.isEmpty()) {
-            repository.save(entity);
-        }
+    public long save(Customer customer) {
+        return repository.findByPersonNumber(customer.getPersonNumber())
+                .map(Customer::getId)
+                .orElseGet(() -> repository.save(customer).getId());
     }
 
     @Transactional

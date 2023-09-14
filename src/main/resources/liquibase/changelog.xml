@@ -18,6 +18,9 @@
         <addUniqueConstraint tableName="customer"
                              columnNames="person_number"
                              constraintName="unq_customer_person_number"/>
+        <createIndex tableName="customer" indexName="idx_customer_person_number">
+            <column name="person_number"/>
+        </createIndex>
     </changeSet>
 
     <changeSet id="2" author="Mehdi Eshaghi">
@@ -28,7 +31,6 @@
             </column>
             <column name="customer_id" type="bigint"/>
             <column name="account_number" type="varchar(25)"/>
-            <column name="currency_uid" type="varchar(3)"/>
         </createTable>
         <createSequence sequenceName="seq_account"/>
         <addUniqueConstraint tableName="account"
@@ -40,4 +42,54 @@
                                  referencedColumnNames="id"
                                  constraintName="fk_account_customer"/>
     </changeSet>
+
+    <changeSet id="3" author="Mehdi Eshaghi">
+        <comment>Create order table</comment>
+        <createTable tableName="order">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="order_pk"/>
+            </column>
+            <column name="request_uid" type="varchar(36)"/>
+            <column name="customer_id" type="bigint"/>
+            <column name="grand_total" type="decimal(19, 8)"/>
+            <column name="created_at" type="timestamp"/>
+        </createTable>
+        <createSequence sequenceName="seq_order"/>
+        <addUniqueConstraint tableName="order"
+                             columnNames="request_uid"
+                             constraintName="unq_order_request_uid"/>
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="customer"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_order_customer"/>
+
+        <createIndex tableName="order" indexName="idx_order_request_uid">
+            <column name="request_uid"/>
+        </createIndex>
+        <createIndex tableName="order" indexName="idx_order_customer_id">
+            <column name="customer_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="4" author="Mehdi Eshaghi">
+        <comment>Create order_item table</comment>
+        <createTable tableName="order_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="order_item_pk"/>
+            </column>
+            <column name="order_id" type="bigint"/>
+            <column name="name" type="varchar(25)"/>
+            <column name="price" type="decimal(19, 8)"/>
+            <column name="quantity" type="integer"/>
+            <column name="total" type="decimal(19, 8)"/>
+        </createTable>
+        <createSequence sequenceName="seq_order_item"/>
+        <addForeignKeyConstraint baseTableName="order_item"
+                                 baseColumnNames="order_id"
+                                 referencedTableName="order"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_order_item_order"/>
+    </changeSet>
+
 </databaseChangeLog>

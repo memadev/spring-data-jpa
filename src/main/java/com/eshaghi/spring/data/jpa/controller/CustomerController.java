@@ -47,8 +47,8 @@ class CustomerController {
     }
 
     @PostMapping
-    public void add(@RequestBody CustomerDto dto) {
-        service.save(convertForAdd(dto));
+    public long add(@RequestBody CustomerDto dto) {
+        return service.save(convertForAdd(dto));
     }
 
     @PutMapping
