@@ -13,6 +13,7 @@
 ### Order
   - **Bidirectional One-To-Many** Relationship for Order-OrderItem.
   - Uses **PagingAndSortingRepository** for pagination and sorting of results.
+  - Used **Validation**.
 
 ### Java
   - Uses **record** in Dtos.

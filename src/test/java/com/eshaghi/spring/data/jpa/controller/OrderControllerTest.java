@@ -27,6 +27,7 @@ import static com.eshaghi.spring.data.jpa.fixture.OrderFixture.createOrder2;
 import static java.math.RoundingMode.HALF_UP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Testcontainers
@@ -57,6 +58,17 @@ public class OrderControllerTest {
     void cleanup() {
         customerService.deleteAll();
         orderService.deleteAll();
+    }
+
+    @Test
+    public void test_shouldReturn400_WhenValidationFails() throws Exception {
+        OrderQuery query = new OrderQuery(0, 0, 0);
+        webTestClient.post()
+                .uri(URL_FIND)
+                .contentType(APPLICATION_JSON)
+                .bodyValue(mapper.writeValueAsString(query))
+                .exchange()
+                .expectStatus().isEqualTo(BAD_REQUEST);
     }
 
     @Test
